@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>BRXQUEIROZ :: Cyber Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#05070d;
+  --neon:#00ffcc;
+  --red:#ff003c;
+  --text:#cfd8ff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Consolas, monospace}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
+
+nav{
+  position:fixed;top:0;width:100%;
+  background:rgba(0,0,0,.8);
+  display:flex;justify-content:center;gap:20px;
+  padding:15px;z-index:1000;
+}
+nav a{
+  color:var(--neon);cursor:pointer;
+  text-decoration:none;font-weight:bold;
+}
+nav a:hover{color:white}
+
+.page{display:none;padding:120px 10% 80px;min-height:100vh}
+.page.active{display:block}
+
+h1,h2{color:var(--neon);margin-bottom:20px}
+p{line-height:1.6;margin-bottom:15px}
+
+.container{max-width:1100px;margin:auto}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:rgba(0,0,0,.6);
+  border:1px solid var(--neon);
+  padding:20px;
+  transition:.3s;
+}
+.card:hover{transform:scale(1.05)}
+
+img.full{
+  width:100%;border:2px solid var(--neon);margin-top:20px
+}
+
+/* TERMINAL */
+.terminal{background:black;border:1px solid var(--neon);padding:15px}
+.output{height:200px;overflow:auto}
+.terminal input{
+  width:100%;background:black;color:var(--neon);
+  border:none;outline:none;margin-top:10px
+}
+
+/* LOGIN */
+#login{
+  position:fixed;inset:0;background:black;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999
+}
+#loginBox{
+  border:2px solid var(--neon);
+  padding:30px;text-align:center
+}
+#login input{
+  display:block;margin:10px auto;
+  padding:8px;background:black;color:var(--neon);
+  border:1px solid var(--neon)
+}
+#login button{
+  padding:10px 20px;background:var(--neon);
+  border:none;cursor:pointer
+}
+
+/* HACKER FLASH */
+#hackerFlash{
+  position:fixed;inset:0;
+  background:black url('https://upload.wikimedia.org/wikipedia/commons/2/2c/Anonymous_emblem.svg') center/300px no-repeat;
+  display:none;z-index:9998
+}
+
+/* MAP */
+.mapWrap{position:relative}
+.mapWrap img{width:100%;border:2px solid var(--red)}
+.ipFeed{
+  position:absolute;right:10px;top:10px;
+  background:black;padding:10px;
+  font-size:12px;color:var(--red);
+  height:200px;overflow:hidden
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div id="loginBox">
+    <h2>SECURE ACCESS</h2>
+    <input placeholder="login">
+    <input placeholder="password" type="password">
+    <button onclick="fakeLogin()">ENTER</button>
+  </div>
+</div>
+
+<div id="hackerFlash"></div>
+
+<nav>
+  <a onclick="go('home')">Home</a>
+  <a onclick="go('tech')">Tech</a>
+  <a onclick="go('projects')">Projects</a>
+  <a onclick="go('map')">World Map</a>
+  <a onclick="go('terminal')">Terminal</a>
+  <a onclick="go('music')">Music</a>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="page active">
+  <div class="container">
+    <h1>BRXQUEIROZ</h1>
+    <p>Profissional de TI e Cybersegurança. Programação como engenharia: sistemas previsíveis, código auditável e decisões conscientes.</p>
+    <img class="full" src="https://images.unsplash.com/photo-1604014237800-1c9102c219da">
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech" class="page">
+  <div class="container">
+    <h2>Programming & Engineering</h2>
+    <div class="grid">
+      <div class="card"><h3>Stack</h3><p>JavaScript • HTML • CSS</p></div>
+      <div class="card"><h3>Mindset</h3><p>Clean Code • Segurança por Design • Pensamento Sistêmico</p></div>
+      <div class="card"><h3>Arquitetura</h3><p>Separação de responsabilidades • Resiliência • Escalabilidade</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="page">
+  <div class="container">
+    <h2>Selected Projects</h2>
+    <div class="grid">
+      <div class="card"><h3>Cyber War Room</h3><p>Monitoramento e defesa simulada</p></div>
+      <div class="card"><h3>Secure Dashboards</h3><p>Interfaces administrativas seguras</p></div>
+      <div class="card"><h3>Threat Visualizer</h3><p>Eventos e ataques em tempo real</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map" class="page">
+  <div class="container">
+    <h2>Global Threat Map</h2>
+    <div class="mapWrap">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
+      <div class="ipFeed" id="ips"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL -->
+<section id="terminal" class="page">
+  <div class="container">
+    <h2>Terminal</h2>
+    <div class="terminal">
+      <div class="output" id="out">&gt; system ready</div>
+      <input onkeydown="if(event.key==='Enter')run(this)">
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music" class="page">
+  <div class="container">
+    <h2>Music</h2>
+    <div class="card">
+      <p>Música criada por Queiroz usando IA como ferramenta. Letra e conceito autorais.</p>
+      <a href="https://youtu.be/DRONvplAHJM" target="_blank" style="color:var(--neon)">▶ Ouvir no YouTube</a>
+    </div>
+  </div>
+</section>
+
+<script>
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function fakeLogin(){
+  document.getElementById('login').style.display='none';
+  const f=document.getElementById('hackerFlash');
+  f.style.display='block';
+  setTimeout(()=>f.style.display='none',1200);
+}
+
+function run(i){
+  const o=document.getElementById('out');
+  o.innerHTML+=`<br>> ${i.value}`;
+  i.value='';
+  o.scrollTop=o.scrollHeight;
+}
+
+function randIP(){
+  return Array(4).fill(0).map(()=>Math.floor(Math.random()*255)).join('.');
+}
+setInterval(()=>{
+  const ips=document.getElementById('ips');
+  ips.innerHTML+=randIP()+"<br>";
+  ips.scrollTop=ips.scrollHeight;
+},700);
+</script>
+
+</body>
+</html>
